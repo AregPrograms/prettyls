@@ -1,6 +1,8 @@
 # prettyls
 List files and directories - modernly.
 
+![](https://github.com/AregPrograms/prettyls/raw/main/.github/example-1.png)
+
 # Installation
 **Linux:** <sup>Tested on Ubuntu</sup>
 - Clone this repository.
