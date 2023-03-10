@@ -1,6 +1,9 @@
 #include <string>
 #include <iostream>
 #include <filesystem>
+#include <cstring>
+#include <algorithm>
+#include <cctype>
 #include <vector>
 namespace fs = std::filesystem;
 
@@ -39,31 +42,40 @@ int main()
         if (directory_count%grouping == 0) { std::cout << "\n"; };
     }
 
+    std::cout << "\n";
+
     for (int i = 0; i < files.size(); i++) {
         std::string prefix = "";
         std::string extension = std::string(files[i].extension());
+        std::transform(extension.begin(), extension.end(), extension.begin(),
+                        [](unsigned char c){ return std::tolower(c); });
         std::string filename = std::string(files[i].filename());
 
+        if (!extension.compare(".md"))   prefix = "";
+
         if (!extension.compare(".c")  ||
-            !extension.compare(".h"))    prefix = "";
+            !extension.compare(".h"))    prefix = "\033[36m\033[0m";
         if (!extension.compare(".cpp")||
-            !extension.compare(".hpp"))  prefix = "";
-        if (!extension.compare(".py"))   prefix = "";
-        if (!extension.compare(".java")) prefix = "";
-        if (!extension.compare(".js"))   prefix = "";
-        if (!extension.compare(".json")) prefix = "";
-        if (!extension.compare(".html")) prefix = "";
-        if (!extension.compare(".css"))  prefix = "";
+            !extension.compare(".hpp"))  prefix = "\033[36m\033[0m";
+        if (!extension.compare(".py"))   prefix = "\033[33m\033[0m";
+        if (!extension.compare(".java")) prefix = "\033[38;5;202m\033[0m";
+        if (!extension.compare(".js"))   prefix = "\033[33m\033[0m";
+        if (!extension.compare(".ts"))   prefix = "\033[36m\033[0m";
+        if (!extension.compare(".json")) prefix = "\033[33m\033[0m";
+        if (!extension.compare(".html")) prefix = "\033[38;5;202m\033[0m";
+        if (!extension.compare(".css"))  prefix = "\033[36m\033[0m";
         if (!extension.compare(".sass")||
-            !extension.compare(".scss")) prefix = "";
+            !extension.compare(".scss")) prefix = "\033[38;5;204m\033[0m";
         if (!extension.compare(".exe") ||
             !extension.compare(".asm") ||
             !extension.compare(".s"))    prefix = "";
 
         if (!extension.compare(".jsx")||
-            !extension.compare(".tsx"))  prefix = "";
+            !extension.compare(".tsx"))  prefix = "\033[36m\033[0m";
 
-        if (!filename.compare(".gitignore")) prefix = "";
+        if (!filename.compare(".gitignore")) prefix = "\033[38;5;202m\033[0m";
+        if (!filename.compare("Makefile"))   prefix = "";
+        if (!filename.compare("LICENSE"))    prefix = "\033[33m\033[0m";
 
         file_count++;
         std::cout << prefix << " " << filename << "\033[0m " << std::string(longest_file_string_length-filename.size(), ' ');
