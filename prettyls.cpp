@@ -5,7 +5,78 @@
 #include <algorithm>
 #include <cctype>
 #include <vector>
+#include <unordered_map>
+
 namespace fs = std::filesystem;
+
+std::unordered_map<std::string, std::string> extensions = {
+	{".md", "\033[36m\033[0m"},
+
+	{".c", "\033[36m\033[0m"},
+	{".h", "\033[36m\033[0m"},
+	{".cpp", "\033[36m\033[0m"},
+	{".hpp", "\033[36m\033[0m"},
+
+    {".js" , "\033[33m\033[0m"},
+    {".ts", "\033[36m\033[0m"},
+    {".json", "\033[33m\033[0m"},
+    {".html", "\033[38;5;202m\033[0m"},
+    {".css", "\033[36m\033[0m"},
+    {".sass", "\033[38;5;204m\033[0m"},
+    {".scss", "\033[38;5;204m\033[0m"},
+	{".jsx", "\033[36m\033[0m"},
+	{".tsx", "\033[36m\033[0m"},
+
+    {".exe", ""},
+    {".asm", ""},
+    {".s"  ,""},
+	{".so", ""},
+
+	{".cs", "\033[35m\033[0m"},
+	{".java" , "\033[38;5;202m\033[0m"},
+	{".py", "\033[33m\033[0m"},
+
+	{".sql", "\033[36m\033[0m"},
+
+	{".php","\033[35m\033[0m"},
+	{".go", "\033[36m\033[0m"},
+	{".rs", "\033[38;5;202m\033[0m"},
+	{".rb", "\033[31m\033[0m"},
+	{".swift", "\033[38;5;202m\033[0m"},
+	{".pl", "\033[34m\033[0m"},
+	{".kts", "\033[35m\033[0m"},
+	{".kt", "\033[35m\033[0m"},
+
+	{".sh", ""},
+    {".bat", "\033[36m\033[0m"},
+
+    {".dart", "\033[36m\033[0m"},
+    {".ex", "\033[35m\033[0m"},
+    {".exs", "\033[35m\033[0m"},
+    {".erl", "\033[31m\033[0m"},
+    {".hrl", "\033[31m\033[0m"},
+
+    {".vim", "\033[32m\033[0m"},
+    {".lua", "\033[36m\033[0m"},
+
+    {".jl", ""},
+    {".fs", "\033[36m\033[0m"},
+    {".fsi", "\033[36m\033[0m"},
+    {".fsx", "\033[36m\033[0m"},
+    {".fsscript","\033[36m\033[0m"},
+    {".coffee","\033[36m\033[0m"},
+    {".litcoffee","\033[36m\033[0m"},
+
+    {".scpt" , ""},
+    {".scptd", ""},
+};
+
+std::unordered_map<std::string, std::string> filenames = {
+	{".gitignore",	"\033[38;5;202m\033[0m"},
+	{".gitconfig",	"\033[38;5;202m\033[0m"},
+	{"Makefile",	""},
+	{"LICENSE",		"\033[33m\033[0m"},
+};
 
 int main(int argc, char* argv[]) {
     int grouping = 2;
@@ -68,59 +139,18 @@ int main(int argc, char* argv[]) {
                         [](unsigned char c){ return std::tolower(c); });
         std::string filename = std::string(files[i].filename());
 
-        if (!extension.compare(".md"))   prefix = "";
+		// Prioritize the extension over the filename
+		if (auto e = extensions.find(extension); e != extensions.end()) {
+			prefix = e->second;
+		}
+		else {
+			// Filenames
+			if (!filename.compare(".gitignore")||
+				!filename.compare(".gitconfig")) prefix = "\033[38;5;202m\033[0m";
+			if (!filename.compare("Makefile"))   prefix = "";
+			if (!filename.compare("LICENSE"))    prefix = "\033[33m\033[0m";
+		}
 
-        if (!extension.compare(".c")  ||
-            !extension.compare(".h"))       prefix = "\033[36m\033[0m";
-        if (!extension.compare(".cpp")||
-            !extension.compare(".hpp"))     prefix = "\033[36m\033[0m";
-        if (!extension.compare(".py"))      prefix = "\033[33m\033[0m";
-        if (!extension.compare(".java"))    prefix = "\033[38;5;202m\033[0m";
-        if (!extension.compare(".js"))      prefix = "\033[33m\033[0m";
-        if (!extension.compare(".ts"))      prefix = "\033[36m\033[0m";
-        if (!extension.compare(".json"))    prefix = "\033[33m\033[0m";
-        if (!extension.compare(".html"))    prefix = "\033[38;5;202m\033[0m";
-        if (!extension.compare(".css"))     prefix = "\033[36m\033[0m";
-        if (!extension.compare(".sass")||
-            !extension.compare(".scss"))    prefix = "\033[38;5;204m\033[0m";
-        if (!extension.compare(".exe") ||
-            !extension.compare(".asm") ||
-            !extension.compare(".s"))       prefix = "";
-        if (!extension.compare(".cs"))      prefix = "\033[35m\033[0m";
-        if (!extension.compare(".sql"))     prefix = "\033[36m\033[0m";
-        if (!extension.compare(".php"))     prefix = "\033[35m\033[0m";
-        if (!extension.compare(".go"))      prefix = "\033[36m\033[0m";
-        if (!extension.compare(".rs"))      prefix = "\033[38;5;202m\033[0m";
-        if (!extension.compare(".rb"))      prefix = "\033[31m\033[0m";
-        if (!extension.compare(".swift"))   prefix = "\033[38;5;202m\033[0m";
-        if (!extension.compare(".pl"))      prefix = "\033[34m\033[0m";
-        if (!extension.compare(".kts") ||
-            !extension.compare(".kt"))      prefix = "\033[35m\033[0m";
-        if (!extension.compare(".sh"))      prefix = "";
-        if (!extension.compare(".bat"))     prefix = "\033[36m\033[0m";
-        if (!extension.compare(".dart"))    prefix = "\033[36m\033[0m";
-        if (!extension.compare(".ex") ||
-            !extension.compare(".exs"))     prefix = "\033[35m\033[0m";
-        if (!extension.compare(".erl") ||
-            !extension.compare(".hrl"))     prefix = "\033[31m\033[0m";
-        if (!extension.compare(".vim"))     prefix = "\033[32m\033[0m";
-        if (!extension.compare(".lua"))     prefix = "\033[36m\033[0m";
-        if (!extension.compare(".jl"))      prefix = "";
-        if (!extension.compare(".fs") ||
-            !extension.compare(".fsi")||
-            !extension.compare(".fsx")||
-            !extension.compare(".fsscript")) prefix = "\033[36m\033[0m";
-        if (!extension.compare(".litcoffee")) prefix = "\033[38;5;95m\033[0m";
-        if (!extension.compare(".scpt") ||
-            !extension.compare(".scptd"))   prefix = "";
-
-        if (!extension.compare(".jsx")||
-            !extension.compare(".tsx"))  prefix = "\033[36m\033[0m";
-
-        if (!filename.compare(".gitignore")||
-            !filename.compare(".gitconfig")) prefix = "\033[38;5;202m\033[0m";
-        if (!filename.compare("Makefile"))   prefix = "";
-        if (!filename.compare("LICENSE"))    prefix = "\033[33m\033[0m";
 
         file_count++;
         std::cout << prefix << " " << filename << "\033[0m " << std::string(longest_file_string_length-filename.size(), ' ');
