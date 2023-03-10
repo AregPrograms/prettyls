@@ -53,37 +53,54 @@ int main(int argc, char* argv[]) {
         if (!extension.compare(".md"))   prefix = "";
 
         if (!extension.compare(".c")  ||
-            !extension.compare(".h"))     prefix = "\033[36m\033[0m";
+            !extension.compare(".h"))       prefix = "\033[36m\033[0m";
         if (!extension.compare(".cpp")||
-            !extension.compare(".hpp"))   prefix = "\033[36m\033[0m";
-        if (!extension.compare(".py"))    prefix = "\033[33m\033[0m";
-        if (!extension.compare(".java"))  prefix = "\033[38;5;202m\033[0m";
-        if (!extension.compare(".js"))    prefix = "\033[33m\033[0m";
-        if (!extension.compare(".ts"))    prefix = "\033[36m\033[0m";
-        if (!extension.compare(".json"))  prefix = "\033[33m\033[0m";
-        if (!extension.compare(".html"))  prefix = "\033[38;5;202m\033[0m";
-        if (!extension.compare(".css"))   prefix = "\033[36m\033[0m";
+            !extension.compare(".hpp"))     prefix = "\033[36m\033[0m";
+        if (!extension.compare(".py"))      prefix = "\033[33m\033[0m";
+        if (!extension.compare(".java"))    prefix = "\033[38;5;202m\033[0m";
+        if (!extension.compare(".js"))      prefix = "\033[33m\033[0m";
+        if (!extension.compare(".ts"))      prefix = "\033[36m\033[0m";
+        if (!extension.compare(".json"))    prefix = "\033[33m\033[0m";
+        if (!extension.compare(".html"))    prefix = "\033[38;5;202m\033[0m";
+        if (!extension.compare(".css"))     prefix = "\033[36m\033[0m";
         if (!extension.compare(".sass")||
-            !extension.compare(".scss"))  prefix = "\033[38;5;204m\033[0m";
+            !extension.compare(".scss"))    prefix = "\033[38;5;204m\033[0m";
         if (!extension.compare(".exe") ||
             !extension.compare(".asm") ||
-            !extension.compare(".s"))     prefix = "";
-        if (!extension.compare(".cs"))    prefix = "\033[35m\033[0m";
-        if (!extension.compare(".sql"))   prefix = "\033[36m\033[0m";
-        if (!extension.compare(".php"))   prefix = "\033[35m\033[0m";
-        if (!extension.compare(".go"))    prefix = "\033[36m\033[0m";
-        if (!extension.compare(".rs"))    prefix = "\033[38;5;202m\033[0m";
-        if (!extension.compare(".rb"))    prefix = "\033[31m\033[0m";
-        if (!extension.compare(".swift")) prefix = "\033[38;5;202m\033[0m";
-        if (!extension.compare(".pl"))    prefix = "\033[34m\033[0m";
+            !extension.compare(".s"))       prefix = "";
+        if (!extension.compare(".cs"))      prefix = "\033[35m\033[0m";
+        if (!extension.compare(".sql"))     prefix = "\033[36m\033[0m";
+        if (!extension.compare(".php"))     prefix = "\033[35m\033[0m";
+        if (!extension.compare(".go"))      prefix = "\033[36m\033[0m";
+        if (!extension.compare(".rs"))      prefix = "\033[38;5;202m\033[0m";
+        if (!extension.compare(".rb"))      prefix = "\033[31m\033[0m";
+        if (!extension.compare(".swift"))   prefix = "\033[38;5;202m\033[0m";
+        if (!extension.compare(".pl"))      prefix = "\033[34m\033[0m";
         if (!extension.compare(".kts") ||
-            !extension.compare(".kt"))    prefix = "\033[35m\033[0m";
-
+            !extension.compare(".kt"))      prefix = "\033[35m\033[0m";
+        if (!extension.compare(".sh"))      prefix = "";
+        if (!extension.compare(".bat"))     prefix = "\033[36m\033[0m";
+        if (!extension.compare(".dart"))    prefix = "\033[36m\033[0m";
+        if (!extension.compare(".ex") ||
+            !extension.compare(".exs"))     prefix = "\033[35m\033[0m";
+        if (!extension.compare(".erl") ||
+            !extension.compare(".hrl"))     prefix = "\033[31m\033[0m";
+        if (!extension.compare(".vim"))     prefix = "\033[32m\033[0m";
+        if (!extension.compare(".lua"))     prefix = "\033[36m\033[0m";
+        if (!extension.compare(".jl"))      prefix = "";
+        if (!extension.compare(".fs") ||
+            !extension.compare(".fsi")||
+            !extension.compare(".fsx")||
+            !extension.compare(".fsscript")) prefix = "\033[36m\033[0m";
+        if (!extension.compare(".litcoffee")) prefix = "\033[38;5;95m\033[0m";
+        if (!extension.compare(".scpt") ||
+            !extension.compare(".scptd"))   prefix = "";
 
         if (!extension.compare(".jsx")||
             !extension.compare(".tsx"))  prefix = "\033[36m\033[0m";
 
-        if (!filename.compare(".gitignore")) prefix = "\033[38;5;202m\033[0m";
+        if (!filename.compare(".gitignore")||
+            !filename.compare(".gitconfig")) prefix = "\033[38;5;202m\033[0m";
         if (!filename.compare("Makefile"))   prefix = "";
         if (!filename.compare("LICENSE"))    prefix = "\033[33m\033[0m";
 
