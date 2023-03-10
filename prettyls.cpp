@@ -60,10 +60,12 @@ std::unordered_map<std::string, std::string> extensions = {
     {".lua", "\033[36m\033[0m"},
 
     {".jl", ""},
+
     {".fs", "\033[36m\033[0m"},
     {".fsi", "\033[36m\033[0m"},
     {".fsx", "\033[36m\033[0m"},
     {".fsscript","\033[36m\033[0m"},
+
     {".coffee","\033[36m\033[0m"},
     {".litcoffee","\033[36m\033[0m"},
 
@@ -130,7 +132,7 @@ int main(int argc, char* argv[]) {
         if (directory_count%grouping == 0) { std::cout << "\n"; };
     }
 
-    std::cout << "\n";
+    if (directories.size()%grouping != 0) std::cout << "\n";
 
     for (int i = 0; i < files.size(); i++) {
         std::string prefix = "";
@@ -157,4 +159,6 @@ int main(int argc, char* argv[]) {
 
         if (file_count%grouping == 0) { std::cout << "\n"; };
     }
+
+    if (files.size()%grouping != 0) std::cout << "\n";
 }
