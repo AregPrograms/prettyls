@@ -54,21 +54,32 @@ int main()
         if (!extension.compare(".md"))   prefix = "";
 
         if (!extension.compare(".c")  ||
-            !extension.compare(".h"))    prefix = "\033[36m\033[0m";
+            !extension.compare(".h"))     prefix = "\033[36m\033[0m";
         if (!extension.compare(".cpp")||
-            !extension.compare(".hpp"))  prefix = "\033[36m\033[0m";
-        if (!extension.compare(".py"))   prefix = "\033[33m\033[0m";
-        if (!extension.compare(".java")) prefix = "\033[38;5;202m\033[0m";
-        if (!extension.compare(".js"))   prefix = "\033[33m\033[0m";
-        if (!extension.compare(".ts"))   prefix = "\033[36m\033[0m";
-        if (!extension.compare(".json")) prefix = "\033[33m\033[0m";
-        if (!extension.compare(".html")) prefix = "\033[38;5;202m\033[0m";
-        if (!extension.compare(".css"))  prefix = "\033[36m\033[0m";
+            !extension.compare(".hpp"))   prefix = "\033[36m\033[0m";
+        if (!extension.compare(".py"))    prefix = "\033[33m\033[0m";
+        if (!extension.compare(".java"))  prefix = "\033[38;5;202m\033[0m";
+        if (!extension.compare(".js"))    prefix = "\033[33m\033[0m";
+        if (!extension.compare(".ts"))    prefix = "\033[36m\033[0m";
+        if (!extension.compare(".json"))  prefix = "\033[33m\033[0m";
+        if (!extension.compare(".html"))  prefix = "\033[38;5;202m\033[0m";
+        if (!extension.compare(".css"))   prefix = "\033[36m\033[0m";
         if (!extension.compare(".sass")||
-            !extension.compare(".scss")) prefix = "\033[38;5;204m\033[0m";
+            !extension.compare(".scss"))  prefix = "\033[38;5;204m\033[0m";
         if (!extension.compare(".exe") ||
             !extension.compare(".asm") ||
-            !extension.compare(".s"))    prefix = "";
+            !extension.compare(".s"))     prefix = "";
+        if (!extension.compare(".cs"))    prefix = "\033[35m\033[0m";
+        if (!extension.compare(".sql"))   prefix = "\033[36m\033[0m";
+        if (!extension.compare(".php"))   prefix = "\033[35m\033[0m";
+        if (!extension.compare(".go"))    prefix = "\033[36m\033[0m";
+        if (!extension.compare(".rs"))    prefix = "\033[38;5;202m\033[0m";
+        if (!extension.compare(".rb"))    prefix = "\033[31m\033[0m";
+        if (!extension.compare(".swift")) prefix = "\033[38;5;202m\033[0m";
+        if (!extension.compare(".pl"))    prefix = "\033[34m\033[0m";
+        if (!extension.compare(".kts") ||
+            !extension.compare(".kt"))    prefix = "\033[35m\033[0m";
+
 
         if (!extension.compare(".jsx")||
             !extension.compare(".tsx"))  prefix = "\033[36m\033[0m";
