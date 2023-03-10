@@ -7,9 +7,8 @@
 #include <vector>
 namespace fs = std::filesystem;
 
-int main()
-{
-    int grouping = 2;
+int main(int argc, char* argv[]) {
+    int grouping = (argc > 1) ? std::stoi(std::string(argv[1])) : 2;
     int directory_count = 0;
     int file_count = 0;
     int longest_directory_string_length = 0;
