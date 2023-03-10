@@ -8,7 +8,25 @@
 namespace fs = std::filesystem;
 
 int main(int argc, char* argv[]) {
-    int grouping = (argc > 1) ? std::stoi(std::string(argv[1])) : 2;
+    int grouping = 2;
+    if (argc > 1) {
+        if (!strcmp(argv[1], "--color=auto")) {
+            // most likely using ls instead of pls
+            try {
+                grouping = (argc > 2) ? std::stoi(std::string(argv[2])) : 2;
+            } catch (std::invalid_argument) {
+                std::cout << "\033[31merror:\033[0m Invalid argument for grouping: Please supply an integer." << std::endl;
+                return 1;
+            }
+        } else {
+            try {
+                grouping = (argc > 1) ? std::stoi(std::string(argv[1])) : 2;
+            } catch (std::invalid_argument) {
+                std::cout << "\033[31merror:\033[0m Invalid argument for grouping: Please supply an integer." << std::endl;
+                return 1;
+            }
+        }
+    }
     int directory_count = 0;
     int file_count = 0;
     int longest_directory_string_length = 0;
@@ -102,8 +120,7 @@ int main(int argc, char* argv[]) {
         if (!filename.compare(".gitignore")||
             !filename.compare(".gitconfig")) prefix = "\033[38;5;202m\033[0m";
         if (!filename.compare("Makefile"))   prefix = "";
-        if (!filename.compare("LICENSE") ||
-            !filename.compare("LICENSE.txt"))prefix = "\033[33m\033[0m";
+        if (!filename.compare("LICENSE"))    prefix = "\033[33m\033[0m";
 
         file_count++;
         std::cout << prefix << " " << filename << "\033[0m " << std::string(longest_file_string_length-filename.size(), ' ');
