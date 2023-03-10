@@ -102,7 +102,8 @@ int main(int argc, char* argv[]) {
         if (!filename.compare(".gitignore")||
             !filename.compare(".gitconfig")) prefix = "\033[38;5;202m\033[0m";
         if (!filename.compare("Makefile"))   prefix = "";
-        if (!filename.compare("LICENSE"))    prefix = "\033[33m\033[0m";
+        if (!filename.compare("LICENSE") ||
+            !filename.compare("LICENSE.txt"))prefix = "\033[33m\033[0m";
 
         file_count++;
         std::cout << prefix << " " << filename << "\033[0m " << std::string(longest_file_string_length-filename.size(), ' ');
