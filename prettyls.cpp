@@ -37,7 +37,7 @@ int main()
 
     for (int i = 0; i < directories.size(); i++) {
         directory_count++;
-        std::cout << "\033[34m " << directories[i] << "\033[0m " << std::string(longest_directory_string_length-directories[i].size(), ' ');
+        std::cout << "\033[36m " << directories[i] << "\033[0m " << std::string(longest_directory_string_length-directories[i].size(), ' ');
 
         if (directory_count%grouping == 0) { std::cout << "\n"; };
     }
