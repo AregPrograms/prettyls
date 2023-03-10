@@ -4,6 +4,10 @@ List files and directories - modernly.
 ![](https://github.com/AregPrograms/prettyls/raw/main/.github/example-1.png)
 
 # Installation
+**REQUIREMENTS:**
+- A nerd font
+- True color terminal
+
 **Linux:** <sup>Tested on Ubuntu</sup>
 - Clone this repository.
 - Run `cd prettyls` to enter prettyls' directory.
