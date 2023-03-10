@@ -1,7 +1,14 @@
 CC=g++
 
-all:
+linux:
 	@$(CC) prettyls.cpp -o "dist/pls" -O2
-	@cp "dist/pls" "dist/ls"
-	@printf "\033[34m[ SUDO ]\033[0m \033[34msudo\033[0m access might be requested to write to /usr/bin\n"
-	@sudo cp "dist/pls" /usr/bin
+
+macos:
+	@$(CC) prettyls.cpp -o "dist/pls" -O2
+
+add_path_linux:
+	@echo "export PATH=$$PWD/dist:$$PATH" >> ~/.bashrc
+
+add_path_macos:
+	@echo "export PATH=$$PWD/dist:$$PATH" >> ~/.bash_profile
+
