@@ -1,11 +1,12 @@
 CC=g++
+CFLAGS = -O2 -Wall
 
-linux:
-	@$(CC) prettyls.cpp -o "dist/pls" -O2
+linux: _warning_suppression
+	@$(CC) prettyls.cpp -o "dist/pls" $(CFLAGS)
 	@cp "dist/pls" "dist/ls"
 
-macos:
-	@$(CC) prettyls.cpp -o "dist/pls" -O2
+macos: _warning_suppression
+	@$(CC) prettyls.cpp -o "dist/pls" $(CFLAGS)
 	@cp "dist/pls" "dist/ls"
 
 add_path_linux:
@@ -14,3 +15,11 @@ add_path_linux:
 add_path_macos:
 	@echo "export PATH=$$PWD/dist:$$PATH" >> ~/.bash_profile
 
+_warning_suppression:
+	@echo Building...
+ifeq ($(CC), clang++) # will have to include clang as well, but ORs are goofy
+	@echo Building with Clang...
+CFLAGS += -Wno-c++17-extensions -std=c++17
+else
+	@echo Building...
+endif

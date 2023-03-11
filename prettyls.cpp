@@ -7,6 +7,8 @@
 #include <vector>
 #include <unordered_map>
 
+// std::filesystem is C++17
+// Stating this standard is explicitly required by Clang and Clang-based LSPs
 namespace fs = std::filesystem;
 
 std::unordered_map<std::string, std::string> extensions = {
