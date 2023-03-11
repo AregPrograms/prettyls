@@ -8,7 +8,7 @@ List files and directories - modernly.
 - A nerd font
 - True color terminal
 
-**Linux:** <sup>Tested on Ubuntu</sup>
+**Linux:** <sup>Tested on Ubuntu (Desktop) and Ubuntu WSL</sup>
 - Clone this repository.
 - Run `cd prettyls` to enter prettyls' directory.
 - Make sure you have a C++ compiler installed.
