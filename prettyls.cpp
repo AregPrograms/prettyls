@@ -11,6 +11,19 @@ namespace fs = std::filesystem;
 
 std::unordered_map<std::string, std::string> extensions = {
 	{".md", "\033[36m\033[0m"},
+    {".jpg", ""},
+    {".png", ""},
+    {".tiff", ""},
+    {".bmp", ""},
+    {".heic", ""},
+
+    {".mp4", ""},
+    {".mov", ""},
+    {".avi", ""},
+    {".mkv", ""},
+    {".webm", ""},
+    {".flv", ""},
+    {".gif", ""},
 
 	{".c", "\033[36m\033[0m"},
 	{".h", "\033[36m\033[0m"},
