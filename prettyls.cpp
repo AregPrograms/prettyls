@@ -13,6 +13,19 @@ namespace fs = std::filesystem;
 
 std::unordered_map<std::string, std::string> extensions = {
 	{".md", "\033[36m\033[0m"},
+    {".jpg", ""},
+    {".png", ""},
+    {".tiff", ""},
+    {".bmp", ""},
+    {".heic", ""},
+
+    {".mp4", ""},
+    {".mov", ""},
+    {".avi", ""},
+    {".mkv", ""},
+    {".webm", ""},
+    {".flv", ""},
+    {".gif", ""},
 
 	{".c", "\033[36m\033[0m"},
 	{".h", "\033[36m\033[0m"},
@@ -129,7 +142,7 @@ int main(int argc, char* argv[]) {
 
     for (int i = 0; i < directories.size(); i++) {
         directory_count++;
-        std::cout << "\033[36m " << directories[i] << "\033[0m " << std::string(longest_directory_string_length-directories[i].size(), ' ');
+        std::cout << ((directories[i][0] == '.') ? "\033[38;5;8m" : "\033[36m") << " " << directories[i] << "\033[0m " << std::string(longest_directory_string_length-directories[i].size(), ' ');
 
         if (directory_count%grouping == 0) { std::cout << "\n"; };
     }
