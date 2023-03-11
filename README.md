@@ -12,7 +12,7 @@ List files and directories - modernly.
 - Clone this repository.
 - Run `cd prettyls` to enter prettyls' directory.
 - Make sure you have a C++ compiler installed.
-	- The Makefile uses `g++`, if you prefer to use a different C++ compiler <sup>like `clang++`</sup> you can change `CC=g++` to `CC=clang++` in the Makefile
+	- The Makefile uses `g++`, if you prefer to use a different C++ compiler like `clang++` you can change `CC=g++` to `CC=clang++` in the Makefile
 - Make sure you have `make` install
 - Run `make linux` to compile the source.
 - Run `make add_path_linux` to add to PATH.
