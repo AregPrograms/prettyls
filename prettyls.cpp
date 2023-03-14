@@ -6,11 +6,14 @@
 #include <cctype>
 #include <vector>
 #include <unordered_map>
+#include "./include/curl/curl.h"
 
 namespace fs = std::filesystem;
 
 std::unordered_map<std::string, std::string> extensions = {
 	{".md", "\033[36m\033[0m"},
+    {".pdf", "\033[31m\033[0m"},
+
     {".jpg", ""},
     {".png", ""},
     {".tiff", ""},
@@ -30,6 +33,8 @@ std::unordered_map<std::string, std::string> extensions = {
 	{".cpp", "\033[36m\033[0m"},
 	{".hpp", "\033[36m\033[0m"},
 
+    {".d", "\033[31m\033[0m"},
+
     {".js" , "\033[33m\033[0m"},
     {".ts", "\033[36m\033[0m"},
     {".json", "\033[33m\033[0m"},
@@ -44,6 +49,9 @@ std::unordered_map<std::string, std::string> extensions = {
     {".asm", ""},
     {".s"  ,""},
 	{".so", ""},
+
+    {".hs", "\033[35m\033[0m"},
+    {".lhs", "\033[35m\033[0m"},
 
 	{".cs", "\033[35m\033[0m"},
 	{".java" , "\033[38;5;202m\033[0m"},
@@ -158,13 +166,11 @@ int main(int argc, char* argv[]) {
 		if (auto e = extensions.find(extension); e != extensions.end()) {
 			prefix = e->second;
 		}
-		else {
 			// Filenames
-			if (!filename.compare(".gitignore")||
-				!filename.compare(".gitconfig")) prefix = "\033[38;5;202m\033[0m";
-			if (!filename.compare("Makefile"))   prefix = "";
-			if (!filename.compare("LICENSE"))    prefix = "\033[33m\033[0m";
-		}
+		if (!filename.compare(".gitignore")||
+			!filename.compare(".gitconfig")) prefix = "\033[38;5;202m\033[0m";
+		if (!filename.compare("Makefile"))   prefix = "";
+		if (!filename.compare("LICENSE"))    prefix = "\033[33m\033[0m";
 
 
         file_count++;
