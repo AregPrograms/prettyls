@@ -93,6 +93,12 @@ std::unordered_map<std::string, std::string> extensions = {
 
     {".scpt" , ""},
     {".scptd", ""},
+
+    {".ttf", "\033[31m\033[0m"},
+    {".otf", "\033[31m\033[0m"},
+    {".woff", "\033[31m\033[0m"},
+    {".woff2", "\033[31m\033[0m"},
+    {".fnt", "\033[31m\033[0m"},
 };
 
 std::unordered_map<std::string, std::string> filenames = {
@@ -100,6 +106,10 @@ std::unordered_map<std::string, std::string> filenames = {
 	{".gitconfig",	"\033[38;5;202m\033[0m"},
 	{"Makefile",	""},
 	{"LICENSE",		"\033[33m\033[0m"},
+    {"package.json", "\033[32m\033[0m"},
+    {"package-lock.json", "\033[32m\033[0m"},
+
+	{".csproj", "\033[35m\033[0m"},
 };
 
 int main(int argc, char* argv[]) {
@@ -167,11 +177,14 @@ int main(int argc, char* argv[]) {
 		if (auto e = extensions.find(extension); e != extensions.end()) {
 			prefix = e->second;
 		}
-			// Filenames
-		if (!filename.compare(".gitignore")||
-			!filename.compare(".gitconfig")) prefix = "\033[38;5;202m\033[0m";
-		if (!filename.compare("Makefile"))   prefix = "";
-		if (!filename.compare("LICENSE"))    prefix = "\033[33m\033[0m";
+		// Filenames
+        if (auto f = filenames.find(filename); f != filenames.end()) {
+            prefix = f->second;
+        }
+		//if (!filename.compare(".gitignore")||
+		//	!filename.compare(".gitconfig")) prefix = "\033[38;5;202m\033[0m";
+		//if (!filename.compare("Makefile"))   prefix = "";
+		//if (!filename.compare("LICENSE"))    prefix = "\033[33m\033[0m";
 
 
         file_count++;
