@@ -6,7 +6,6 @@
 #include <cctype>
 #include <vector>
 #include <unordered_map>
-#include "./include/curl/curl.h"
 
 namespace fs = std::filesystem;
 
