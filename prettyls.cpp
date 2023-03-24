@@ -112,6 +112,31 @@ std::unordered_map<std::string, std::string> filenames = {
 	{".csproj", "\033[35m\033[0m"},
 };
 
+std::unordered_map<std::string, std::string> folders = {
+    {"Downloads", ""},
+    {"Documents", ""},
+    {"Desktop", ""},
+    {"Pictures", ""},
+    {"Videos", ""},
+
+    {"css", ""},
+    {"html", ""},
+    {"js", ""},
+    {"javascript", ""},
+    
+    {"database", ""},
+    {"databases", ""},
+    {"db", ""},
+    {"schemas", ""},
+
+    {"test", "ﭧ"},
+    {"tests", "ﭧ"},
+
+    {"node_modules", ""},
+     
+    {"react", ""},
+};
+
 int main(int argc, char* argv[]) {
     int grouping = 2;
     if (argc > 1) {
@@ -158,8 +183,19 @@ int main(int argc, char* argv[]) {
     }
 
     for (int i = 0; i < directories.size(); i++) {
+        std::string folder_name = directories[i];
+
+        std::string icon = "";
+
+        std::transform(folder_name.begin(), folder_name.end(), folder_name.begin(),
+                        [](unsigned char c){ return std::tolower(c); });
+
+        if (auto f = folders.find(directories[i]); f != folders.end()) {
+            icon = f->second;
+        }
+
         directory_count++;
-        std::cout << ((directories[i][0] == '.') ? "\033[38;5;8m" : "\033[36m") << " " << directories[i] << "\033[0m " << std::string(longest_directory_string_length-directories[i].size(), ' ');
+        std::cout << ((directories[i][0] == '.') ? "\033[38;5;8m" : "\033[36m") << icon << " " << directories[i] << "\033[0m " << std::string(longest_directory_string_length-directories[i].size(), ' ');
 
         if (directory_count%grouping == 0) { std::cout << "\n"; };
     }
