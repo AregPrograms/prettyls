@@ -166,6 +166,8 @@ int main(int argc, char* argv[]) {
     int longest_file_string_length = 0;
     std::vector<std::string> directories;
     std::vector<fs::path> files;
+    
+    try {
     for (const auto & entry : fs::directory_iterator(path)) {
         if (entry.is_directory()) {
             std::string dir_name = std::string(entry.path().filename());
@@ -227,4 +229,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (files.size()%grouping != 0) std::cout << "\n";
+    } catch (std::filesystem::__cxx11::filesystem_error) {
+        std::cout << "\033[31merror:\033[0m Error occured while trying to open path \"" << path << "\"" << std::endl;
+    }
 }
