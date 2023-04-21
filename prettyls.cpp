@@ -6,6 +6,8 @@
 #include <cctype>
 #include <vector>
 #include <unordered_map>
+#include <fstream>
+#include <stdlib.h>
 
 // std::filesystem is C++17
 // Stating this standard is explicitly required by Clang and Clang-based LSPs
@@ -138,6 +140,24 @@ std::unordered_map<std::string, std::string> folders = {
     {"react", ""},
 };
 
+std::vector<std::string> split(std::string str, char separator) {
+    std::vector<std::string> strings;
+    int startIndex = 0, endIndex = 0;
+    for (int i = 0; i <= (int)str.size(); i++) {
+        
+        // If we reached the end of the word or the end of the input.
+        if (str[i] == separator || i == (int)str.size()) {
+            endIndex = i;
+            std::string temp;
+            temp.append(str, startIndex, endIndex - startIndex);
+            strings.push_back(temp);
+            startIndex = endIndex + 1;
+        }
+    }
+
+    return strings;
+}
+
 int main(int argc, char* argv[]) {
     int grouping = 2;
     std::string path = ".";
@@ -155,6 +175,20 @@ int main(int argc, char* argv[]) {
     long unsigned int longest_file_string_length = 0;
     std::vector<std::string> directories;
     std::vector<fs::path> files;
+
+    std::string line;
+    std::ifstream config_file(std::string(getenv("HOME")) + "/.config/.prettyls");
+
+    while (getline(config_file, line)) {
+        std::vector<std::string> s = split(line, ':');
+
+        if (!s[0].compare("grouping")) {
+            if (s.size() > 1)
+                grouping = atoi(s[1].c_str());
+            else
+                std::cout << "\033[31merror:\033[0m Please supply a valid integer for grouping." << std::endl;
+        }
+    }
     
     try {
         for (const auto & entry : fs::directory_iterator(path)) {
