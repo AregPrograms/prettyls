@@ -39,6 +39,7 @@ std::unordered_map<std::string, std::string> extensions = {
     {".js" , "\033[33m\033[0m"},
     {".ts", "\033[36m\033[0m"},
     {".json", "\033[33m\033[0m"},
+    {".json5", "\033[33m\033[0m"},
     {".html", "\033[38;5;202m\033[0m"},
     {".css", "\033[36m\033[0m"},
     {".sass", "\033[38;5;204m\033[0m"},
@@ -144,92 +145,80 @@ int main(int argc, char* argv[]) {
         if (!strcmp(argv[1], "--color=auto")) {
             // most likely using ls instead of pls
             if (argc > 2) path = std::string(argv[2]);
-            /*try {
-                grouping = (argc > 2) ? std::stoi(std::string(argv[2])) : 2;
-            } catch (std::invalid_argument) {
-                std::cout << "\033[31merror:\033[0m Invalid argument for grouping: Please supply an integer." << std::endl;
-                return 1;
-            }*/
         } else {
             path = std::string(argv[1]);
-            /*try {
-                grouping = (argc > 1) ? std::stoi(std::string(argv[1])) : 2;
-            } catch (std::invalid_argument) {
-                std::cout << "\033[31merror:\033[0m Invalid argument for grouping: Please supply an integer." << std::endl;
-                return 1;
-            }*/
         }
     }
     int directory_count = 0;
     int file_count = 0;
-    int longest_directory_string_length = 0;
-    int longest_file_string_length = 0;
+    long unsigned int longest_directory_string_length = 0;
+    long unsigned int longest_file_string_length = 0;
     std::vector<std::string> directories;
     std::vector<fs::path> files;
     
     try {
-    for (const auto & entry : fs::directory_iterator(path)) {
-        if (entry.is_directory()) {
-            std::string dir_name = std::string(entry.path().filename());
-            directories.push_back(dir_name);
+        for (const auto & entry : fs::directory_iterator(path)) {
+            if (entry.is_directory()) {
+                std::string dir_name = std::string(entry.path().filename());
+                directories.push_back(dir_name);
 
-            if (dir_name.size() > longest_directory_string_length) {
-                longest_directory_string_length = dir_name.size();
+                if (dir_name.size() > longest_directory_string_length) {
+                    longest_directory_string_length = dir_name.size();
+                }
+            } else {
+                std::string file_name = std::string(entry.path().filename());
+                files.push_back(entry.path());
+
+                if (file_name.size() > longest_file_string_length) {
+                    longest_file_string_length = file_name.size();
+                }
             }
-        } else {
-            std::string file_name = std::string(entry.path().filename());
-            files.push_back(entry.path());
+        }
 
-            if (file_name.size() > longest_file_string_length) {
-                longest_file_string_length = file_name.size();
+        for (long unsigned int i = 0; i < directories.size(); i++) {
+            std::string folder_name = directories[i];
+
+            std::string icon = "";
+
+            std::transform(folder_name.begin(), folder_name.end(), folder_name.begin(),
+                            [](unsigned char c){ return std::tolower(c); });
+
+            if (auto f = folders.find(directories[i]); f != folders.end()) {
+                icon = f->second;
             }
-        }
-    }
 
-    for (int i = 0; i < directories.size(); i++) {
-        std::string folder_name = directories[i];
+            directory_count++;
+            std::cout << ((directories[i][0] == '.') ? "\033[38;5;8m" : "\033[36m") << icon << " " << directories[i] << "\033[0m " << std::string(longest_directory_string_length-directories[i].size(), ' ');
 
-        std::string icon = "";
-
-        std::transform(folder_name.begin(), folder_name.end(), folder_name.begin(),
-                        [](unsigned char c){ return std::tolower(c); });
-
-        if (auto f = folders.find(directories[i]); f != folders.end()) {
-            icon = f->second;
+            if (directory_count%grouping == 0) std::cout << "\n";
         }
 
-        directory_count++;
-        std::cout << ((directories[i][0] == '.') ? "\033[38;5;8m" : "\033[36m") << icon << " " << directories[i] << "\033[0m " << std::string(longest_directory_string_length-directories[i].size(), ' ');
+        if (directories.size()%grouping != 0) std::cout << "\n";
 
-        if (directory_count%grouping == 0) { std::cout << "\n"; };
-    }
+        for (long unsigned int i = 0; i < files.size(); i++) {
+            std::string prefix = "";
+            std::string extension = std::string(files[i].extension());
+            std::transform(extension.begin(), extension.end(), extension.begin(),
+                            [](unsigned char c){ return std::tolower(c); });
+            std::string filename = std::string(files[i].filename());
 
-    if (directories.size()%grouping != 0) std::cout << "\n";
+            // Prioritize the extension over the filename
+            if (auto e = extensions.find(extension); e != extensions.end()) {
+                prefix = e->second;
+            }
+            // Filenames
+            if (auto f = filenames.find(filename); f != filenames.end()) {
+                prefix = f->second;
+            }
 
-    for (int i = 0; i < files.size(); i++) {
-        std::string prefix = "";
-        std::string extension = std::string(files[i].extension());
-        std::transform(extension.begin(), extension.end(), extension.begin(),
-                        [](unsigned char c){ return std::tolower(c); });
-        std::string filename = std::string(files[i].filename());
+            file_count++;
+            std::cout << prefix << " " << filename << "\033[0m " << std::string(longest_file_string_length-filename.size(), ' ');
 
-		// Prioritize the extension over the filename
-		if (auto e = extensions.find(extension); e != extensions.end()) {
-			prefix = e->second;
-		}
-		// Filenames
-        if (auto f = filenames.find(filename); f != filenames.end()) {
-            prefix = f->second;
+            if (file_count%grouping == 0) std::cout << "\n";
         }
 
-        file_count++;
-        std::cout << prefix << " " << filename << "\033[0m " << std::string(longest_file_string_length-filename.size(), ' ');
-
-        if (file_count%grouping == 0) { std::cout << "\n"; };
-    }
-
-    if (files.size()%grouping != 0) std::cout << "\n";
-    } catch (std::filesystem::__cxx11::filesystem_error) {
+        if (files.size()%grouping != 0) std::cout << "\n";
+    } catch (std::filesystem::__cxx11::filesystem_error const&) {
         std::cout << "\033[31merror:\033[0m Error occured while trying to open path \"" << path << "\"" << std::endl;
     }
 }

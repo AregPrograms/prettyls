@@ -16,9 +16,8 @@ add_path_macos:
 	@echo "export PATH=$$PWD/dist:$$PATH" >> ~/.bash_profile
 
 _warning_suppression:
-	@echo Building...
 ifeq ($(CC), clang++) # will have to include clang as well, but ORs are goofy
-	@echo Building with Clang...
+	@printf "Building with clang++... (expiremental)\n"
 CFLAGS += -Wno-c++17-extensions -std=c++17
 else
 	@echo Building...
