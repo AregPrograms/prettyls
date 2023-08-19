@@ -29,4 +29,4 @@ List files and directories - modernly.
 - Restart your terminal or create a new session.
 
 **Windows:** <sup>Untested</sup>
-- Unsupported for now. Should support Windows by Mar. 12, 2023.
+- Untested for now.
